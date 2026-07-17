@@ -1,0 +1,148 @@
+:root {
+  color-scheme: light dark;
+  --bg: #fbfbfd;
+  --fg: #16181d;
+  --muted: #555b66;
+  --border: #c9ccd4;
+  --accent: #0b57d0;
+  font-family: system-ui, sans-serif;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #14161a;
+    --fg: #e8eaef;
+    --muted: #a7adba;
+    --border: #3a3f4a;
+    --accent: #8ab4f8;
+  }
+}
+
+body {
+  margin: 0 auto;
+  max-width: 60rem;
+  padding: 1rem;
+  background: var(--bg);
+  color: var(--fg);
+  line-height: 1.5;
+}
+
+h1 {
+  margin-bottom: 0.25rem;
+}
+
+header p,
+footer p {
+  color: var(--muted);
+}
+
+form,
+section {
+  margin-block: 1.5rem;
+}
+
+.field {
+  margin-block: 0.75rem;
+}
+
+label {
+  display: block;
+  font-weight: 600;
+  margin-bottom: 0.25rem;
+}
+
+select,
+button {
+  font: inherit;
+  padding: 0.4rem 0.6rem;
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  background: var(--bg);
+  color: var(--fg);
+  max-width: 100%;
+}
+
+button {
+  cursor: pointer;
+}
+
+button[disabled] {
+  cursor: not-allowed;
+  opacity: 0.5;
+}
+
+:focus-visible {
+  outline: 3px solid var(--accent);
+  outline-offset: 2px;
+}
+
+.row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  align-items: center;
+}
+
+#stop-list {
+  list-style: none;
+  padding: 0;
+  margin: 0.5rem 0 0;
+}
+
+#stop-list li {
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
+  margin-block: 0.25rem;
+}
+
+#status {
+  min-height: 1.5em;
+  font-weight: 600;
+}
+
+canvas {
+  width: 100%;
+  height: auto;
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  background: #fff;
+}
+
+@media (prefers-color-scheme: dark) {
+  canvas {
+    background: #1d2026;
+  }
+}
+
+table {
+  border-collapse: collapse;
+  width: 100%;
+}
+
+caption {
+  text-align: left;
+  color: var(--muted);
+  margin-bottom: 0.25rem;
+}
+
+th,
+td {
+  border: 1px solid var(--border);
+  padding: 0.35rem 0.6rem;
+  text-align: left;
+}
+
+dl {
+  display: grid;
+  grid-template-columns: max-content 1fr;
+  gap: 0.25rem 1rem;
+}
+
+dt {
+  font-weight: 600;
+}
+
+dd {
+  margin: 0;
+}

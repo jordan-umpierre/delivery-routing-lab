@@ -1,0 +1,136 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta
+      name="description"
+      content="Shortest-path and multi-stop routing algorithms benchmarked over a Kansas City street graph."
+    />
+    <title>Delivery Routing Lab</title>
+    <link rel="stylesheet" href="/src/style.css" />
+  </head>
+  <body>
+    <header>
+      <h1>Delivery Routing Lab</h1>
+      <p>
+        Dijkstra, A*, nearest-neighbor, and 2-opt implemented from scratch and
+        benchmarked over a downtown Kansas City street graph. An educational
+        algorithms lab —
+        <strong>not a navigation product</strong>; routes ignore traffic,
+        closures, and legal restrictions beyond mapped one-ways.
+      </p>
+    </header>
+
+    <main>
+      <form id="controls" aria-labelledby="controls-heading">
+        <h2 id="controls-heading">Route request</h2>
+        <div class="field">
+          <label for="algorithm">Algorithm</label>
+          <select id="algorithm">
+            <option value="dijkstra">Dijkstra</option>
+            <option value="astar">A* (haversine heuristic)</option>
+          </select>
+        </div>
+        <div class="field">
+          <label for="start">Start intersection</label>
+          <select id="start"></select>
+        </div>
+        <div class="field">
+          <label for="destination">Destination intersection</label>
+          <select id="destination"></select>
+        </div>
+        <div class="field">
+          <label for="stop-picker">Delivery stops (optional, up to 10)</label>
+          <div class="row">
+            <select id="stop-picker"></select>
+            <button type="button" id="add-stop">Add stop</button>
+          </div>
+          <ul id="stop-list" aria-label="Added delivery stops"></ul>
+        </div>
+        <div class="row">
+          <button type="submit" id="run">Find route</button>
+          <button type="button" id="compare">Compare algorithms</button>
+          <button type="button" id="cancel" disabled>Cancel</button>
+        </div>
+        <p id="status" role="status"></p>
+      </form>
+
+      <section aria-labelledby="map-heading">
+        <h2 id="map-heading">Map</h2>
+        <canvas
+          id="map"
+          width="900"
+          height="640"
+          role="img"
+          aria-label="Street graph of downtown Kansas City. Visited nodes and the final route are animated here; the same route is listed in the route table below."
+        ></canvas>
+      </section>
+
+      <section aria-labelledby="results-heading" hidden id="results">
+        <h2 id="results-heading">Route result</h2>
+        <dl id="metrics"></dl>
+        <table id="route-table">
+          <caption>
+            Route segments in driving order
+          </caption>
+          <thead>
+            <tr>
+              <th scope="col">#</th>
+              <th scope="col">Street</th>
+              <th scope="col">Length</th>
+              <th scope="col">Cumulative</th>
+            </tr>
+          </thead>
+          <tbody></tbody>
+        </table>
+      </section>
+
+      <section aria-labelledby="compare-heading" hidden id="comparison">
+        <h2 id="compare-heading">Algorithm comparison</h2>
+        <table id="compare-table">
+          <caption>
+            Same request run by both algorithms
+          </caption>
+          <thead>
+            <tr>
+              <th scope="col">Algorithm</th>
+              <th scope="col">Path cost</th>
+              <th scope="col">Nodes expanded</th>
+              <th scope="col">Runtime</th>
+            </tr>
+          </thead>
+          <tbody></tbody>
+        </table>
+        <div class="row">
+          <button type="button" id="export-json">Export JSON</button>
+          <button type="button" id="export-csv">Export CSV</button>
+        </div>
+      </section>
+
+      <section aria-labelledby="about-heading">
+        <h2 id="about-heading">How the algorithms work</h2>
+        <p>
+          <strong>Dijkstra</strong> expands nodes in order of exact distance
+          from the start, so the first time it settles the destination the path
+          is provably shortest. <strong>A*</strong> adds a heuristic: the
+          great-circle (haversine) distance to the destination. Because no
+          street segment can be shorter than the straight line between its
+          endpoints, the heuristic never overestimates the remaining distance —
+          it is <em>admissible</em> — so A* returns the same optimal cost while
+          typically expanding fewer nodes. For multi-stop requests,
+          <strong>nearest-neighbor</strong> greedily orders the stops by
+          shortest-path cost and <strong>2-opt</strong> reverses segments of
+          that order while doing so shortens the total route; the result is
+          never worse than nearest-neighbor's, though neither guarantees the
+          true optimum.
+        </p>
+      </section>
+    </main>
+
+    <footer>
+      <p id="attribution"></p>
+    </footer>
+    <script type="module" src="/src/main.ts"></script>
+  </body>
+</html>
