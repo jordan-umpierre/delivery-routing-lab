@@ -14,7 +14,9 @@ export interface Scenario {
  * caller's job because the graph is not known at parse time.
  */
 export function parseScenarios(csv: string): Scenario[] {
-  const lines = csv.split("\n").filter((line) => line !== "");
+  // Split on \r?\n: Windows checkouts (core.autocrlf=true) and editors
+  // hand this boundary CRLF content, and every caller routes through here.
+  const lines = csv.split(/\r?\n/).filter((line) => line !== "");
   if (lines[0] !== "id,start,goal")
     throw new Error(`scenarios: bad header "${lines[0]}"`);
   return lines.slice(1).map((line) => {
