@@ -5,7 +5,7 @@
 import { readFileSync, writeFileSync } from "node:fs";
 import os from "node:os";
 import { loadGraph } from "../src/graph.ts";
-import { runBenchmark, toCsv, type Scenario } from "../src/bench.ts";
+import { parseScenarios, runBenchmark, toCsv } from "../src/bench.ts";
 
 const graph = loadGraph(
   JSON.parse(
@@ -16,15 +16,17 @@ const graph = loadGraph(
   ),
 );
 
-// Fixed node ids in the versioned fixture: reruns are reproducible.
-const n = graph.fixture.nodes.length;
-const scenarios: Scenario[] = [
-  { id: "short-hop", start: 0, goal: 25 },
-  { id: "cross-town", start: 0, goal: n - 1 },
-  { id: "mid-range", start: Math.floor(n / 4), goal: Math.floor((3 * n) / 4) },
-  { id: "reverse-cross-town", start: n - 1, goal: 0 },
-  { id: "same-node", start: 100, goal: 100 },
-];
+// Fixed node ids in the versioned scenario file: reruns are reproducible.
+const scenarios = parseScenarios(
+  readFileSync(new URL("../data/scenarios.csv", import.meta.url), "utf8"),
+);
+for (const s of scenarios) {
+  if (
+    s.start >= graph.fixture.nodes.length ||
+    s.goal >= graph.fixture.nodes.length
+  )
+    throw new Error(`scenario ${s.id}: node id outside the graph`);
+}
 
 const environment = `Node ${process.version}, ${os.type()} ${os.arch()}, ${os.cpus()[0]?.model ?? "unknown CPU"}`;
 const report = runBenchmark(graph, scenarios, environment);

@@ -8,6 +8,29 @@ export interface Scenario {
   goal: number;
 }
 
+/**
+ * Parse a scenarios CSV (`id,start,goal` header) into validated rows.
+ * Node ids are checked strictly here; bounds against a graph are the
+ * caller's job because the graph is not known at parse time.
+ */
+export function parseScenarios(csv: string): Scenario[] {
+  const lines = csv.split("\n").filter((line) => line !== "");
+  if (lines[0] !== "id,start,goal")
+    throw new Error(`scenarios: bad header "${lines[0]}"`);
+  return lines.slice(1).map((line) => {
+    const fields = line.split(",");
+    const [id, start, goal] = fields;
+    if (
+      fields.length !== 3 ||
+      !id ||
+      !/^\d+$/.test(start!) ||
+      !/^\d+$/.test(goal!)
+    )
+      throw new Error(`scenarios: invalid row "${line}"`);
+    return { id, start: Number(start), goal: Number(goal) };
+  });
+}
+
 export interface BenchmarkRow {
   scenario: string;
   algorithm: Algorithm;
