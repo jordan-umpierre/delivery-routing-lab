@@ -120,6 +120,13 @@ status live region; complete keyboard operation; visible focus; reduced
 motion collapses the animation to an instant final state; light and dark
 schemes.
 
+## Incident report
+
+[docs/works-on-my-machine.md](docs/works-on-my-machine.md) is a debugging
+case study from this repository: a scenario-file parser that passed on
+macOS and Linux but failed on Windows CI, reduced to a one-byte
+reproduction, regression-tested, and fixed at the shared parse boundary.
+
 ## Limitations
 
 Edge weights are geometric length only — no speed limits, travel time,

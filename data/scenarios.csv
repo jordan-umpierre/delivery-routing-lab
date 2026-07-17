@@ -1,0 +1,6 @@
+id,start,goal
+short-hop,0,25
+cross-town,0,1850
+mid-range,462,1388
+reverse-cross-town,1850,0
+same-node,100,100

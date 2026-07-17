@@ -2,6 +2,7 @@ import { test } from "node:test";
 import assert from "node:assert/strict";
 import { readFileSync } from "node:fs";
 import { loadGraph, haversine } from "../src/graph.ts";
+import { parseScenarios } from "../src/bench.ts";
 import { search } from "../src/search.ts";
 import { mulberry32 } from "./helpers.ts";
 
@@ -126,4 +127,15 @@ test("malformed fixtures are rejected", () => {
       edges: [],
     }),
   );
+});
+
+test("committed scenario file parses and stays inside the KC graph", () => {
+  const scenarios = parseScenarios(
+    readFileSync(new URL("../data/scenarios.csv", import.meta.url), "utf8"),
+  );
+  assert.ok(scenarios.length >= 5);
+  const n = graph.fixture.nodes.length;
+  for (const s of scenarios) {
+    assert.ok(s.start < n && s.goal < n, `scenario ${s.id} outside graph`);
+  }
 });
