@@ -1,0 +1,31 @@
+{
+  "name": "delivery-routing-lab",
+  "version": "1.0.0",
+  "description": "Shortest-path and multi-stop routing algorithms (Dijkstra, A*, nearest-neighbor, 2-opt) implemented from scratch and benchmarked over an attributed Kansas City street graph.",
+  "type": "module",
+  "private": true,
+  "engines": {
+    "node": ">=22"
+  },
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview",
+    "typecheck": "tsc --noEmit",
+    "format": "prettier --write .",
+    "format:check": "prettier --check .",
+    "test": "node --test \"test/*.test.ts\"",
+    "e2e": "playwright test",
+    "preprocess": "node scripts/preprocess-osm.ts"
+  },
+  "author": "Jordan Umpierre",
+  "license": "MIT",
+  "devDependencies": {
+    "@axe-core/playwright": "^4.10.0",
+    "@playwright/test": "^1.54.0",
+    "@types/node": "^24.0.0",
+    "prettier": "^3.6.0",
+    "typescript": "^5.9.0",
+    "vite": "^7.0.0"
+  }
+}
