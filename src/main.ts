@@ -81,7 +81,16 @@ const scene: Scene = {
 let animating = false;
 
 function draw(): void {
-  drawScene(ctx, graph, proj, scene, darkScheme.matches);
+  // Hold the final route back until every visited node is revealed, so
+  // the expansion animation reads before the answer appears.
+  const revealDone = scene.visibleVisited >= scene.visited.length;
+  drawScene(
+    ctx,
+    graph,
+    proj,
+    revealDone ? scene : { ...scene, routePath: [] },
+    darkScheme.matches,
+  );
 }
 
 function animate(): void {
@@ -91,7 +100,7 @@ function animate(): void {
     if (reducedMotion.matches) scene.visibleVisited = scene.visited.length;
     else
       scene.visibleVisited = Math.min(
-        scene.visibleVisited + 150,
+        scene.visibleVisited + 40,
         scene.visited.length,
       );
     draw();
@@ -246,8 +255,7 @@ async function runRoute(): Promise<void> {
       goal: destination,
     });
     scene.routePath = r.path;
-    scene.visibleVisited = scene.visited.length;
-    draw();
+    animate(); // keep revealing visited nodes; the route draws when done
     if (r.found) {
       statusEl.textContent = `Route found: ${fmtM(r.cost)}.`;
       showMetrics([
