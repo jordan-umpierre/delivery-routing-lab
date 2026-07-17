@@ -60,3 +60,13 @@ test("scenario CSV parses ids and rejects malformed rows", () => {
   assert.throws(() => parseScenarios("id,start,goal\ns1,0,-3\n"));
   assert.throws(() => parseScenarios("id,start,goal\ns1,zero,3\n"));
 });
+
+test("scenario CSV parses with CRLF line endings (Windows checkouts)", () => {
+  // Regression for issue #2: core.autocrlf=true gives the parser CRLF
+  // content; line splitting must not leave \r on the last field.
+  const rows = parseScenarios("id,start,goal\r\ns1,0,3\r\ns2,10,10\r\n");
+  assert.deepEqual(rows, [
+    { id: "s1", start: 0, goal: 3 },
+    { id: "s2", start: 10, goal: 10 },
+  ]);
+});
