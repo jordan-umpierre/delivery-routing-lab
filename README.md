@@ -9,6 +9,8 @@ appears as an accessible textual route table.
 
 **Live:** https://jordan-umpierre.github.io/delivery-routing-lab/
 
+![Animated Dijkstra search over the Kansas City street graph: visited nodes fill in as blue dots, then the final route draws in red](docs/route-animation.gif)
+
 This is an educational algorithms lab, **not a navigation product**. Routes
 ignore traffic, closures, turn restrictions beyond mapped one-way streets,
 and anything safety-critical. No routing API is called anywhere; every
@@ -34,6 +36,30 @@ result comes from the algorithms in `src/`.
 - **An independent cross-check.** A deliberately different Bellman-Ford
   implementation verifies Dijkstra's distances on sampled Kansas City node
   pairs, offline in the test suite.
+
+## Architecture
+
+```mermaid
+flowchart LR
+    subgraph preprocessing [offline preprocessing]
+        OSM[Overpass extract] --> PRE[preprocess-osm.ts] --> FIX[kc-downtown.graph.json]
+    end
+    subgraph worker [Web Worker]
+        LOAD[graph.ts<br>validate + adjacency] --> SEARCH[search.ts<br>Dijkstra / A* generator]
+        SEARCH --> TOUR[tour.ts<br>nearest-neighbor + 2-opt]
+        HEAP[heap.ts<br>deterministic min-heap] --> SEARCH
+    end
+    subgraph main [main thread]
+        UI[main.ts<br>controls + route table] --> RENDER[render.ts<br>canvas animation]
+    end
+    FIX --> LOAD
+    UI <-- "postMessage:<br>search / tour / cancel /<br>visited batches / result" --> worker
+    SEARCH --> BENCH[bench.ts<br>JSON / CSV export]
+```
+
+Algorithms never touch the DOM; rendering never computes routes. The
+worker consumes the search generator in slices via the event loop, which
+is what makes cancellation and visited-node streaming possible.
 
 ## The graph
 
