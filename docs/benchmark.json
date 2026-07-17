@@ -1,0 +1,109 @@
+{
+  "graph": "kc-downtown",
+  "graphVersion": 1,
+  "extracted": "2026-07-17T19:41:15Z",
+  "environment": "Node v26.3.0, Darwin arm64, Apple M2",
+  "generatedAt": "2026-07-17T19:50:56.446Z",
+  "rows": [
+    {
+      "scenario": "short-hop",
+      "algorithm": "dijkstra",
+      "start": 0,
+      "goal": 25,
+      "found": true,
+      "costMeters": 3963.4,
+      "nodesExpanded": 1071,
+      "runtimeMs": 1.85
+    },
+    {
+      "scenario": "short-hop",
+      "algorithm": "astar",
+      "start": 0,
+      "goal": 25,
+      "found": true,
+      "costMeters": 3963.4,
+      "nodesExpanded": 222,
+      "runtimeMs": 0.37
+    },
+    {
+      "scenario": "cross-town",
+      "algorithm": "dijkstra",
+      "start": 0,
+      "goal": 1850,
+      "found": true,
+      "costMeters": 3449.9,
+      "nodesExpanded": 813,
+      "runtimeMs": 1.16
+    },
+    {
+      "scenario": "cross-town",
+      "algorithm": "astar",
+      "start": 0,
+      "goal": 1850,
+      "found": true,
+      "costMeters": 3449.9,
+      "nodesExpanded": 209,
+      "runtimeMs": 0.25
+    },
+    {
+      "scenario": "mid-range",
+      "algorithm": "dijkstra",
+      "start": 462,
+      "goal": 1388,
+      "found": true,
+      "costMeters": 4625.7,
+      "nodesExpanded": 1384,
+      "runtimeMs": 0.93
+    },
+    {
+      "scenario": "mid-range",
+      "algorithm": "astar",
+      "start": 462,
+      "goal": 1388,
+      "found": true,
+      "costMeters": 4625.7,
+      "nodesExpanded": 642,
+      "runtimeMs": 0.5
+    },
+    {
+      "scenario": "reverse-cross-town",
+      "algorithm": "dijkstra",
+      "start": 1850,
+      "goal": 0,
+      "found": true,
+      "costMeters": 3387.7,
+      "nodesExpanded": 1493,
+      "runtimeMs": 0.9
+    },
+    {
+      "scenario": "reverse-cross-town",
+      "algorithm": "astar",
+      "start": 1850,
+      "goal": 0,
+      "found": true,
+      "costMeters": 3387.7,
+      "nodesExpanded": 373,
+      "runtimeMs": 0.21
+    },
+    {
+      "scenario": "same-node",
+      "algorithm": "dijkstra",
+      "start": 100,
+      "goal": 100,
+      "found": true,
+      "costMeters": 0,
+      "nodesExpanded": 1,
+      "runtimeMs": 0
+    },
+    {
+      "scenario": "same-node",
+      "algorithm": "astar",
+      "start": 100,
+      "goal": 100,
+      "found": true,
+      "costMeters": 0,
+      "nodesExpanded": 1,
+      "runtimeMs": 0
+    }
+  ]
+}

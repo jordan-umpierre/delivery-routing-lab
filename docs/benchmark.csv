@@ -1,0 +1,11 @@
+scenario,algorithm,start,goal,found,costMeters,nodesExpanded,runtimeMs
+short-hop,dijkstra,0,25,true,3963.4,1071,1.85
+short-hop,astar,0,25,true,3963.4,222,0.37
+cross-town,dijkstra,0,1850,true,3449.9,813,1.16
+cross-town,astar,0,1850,true,3449.9,209,0.25
+mid-range,dijkstra,462,1388,true,4625.7,1384,0.93
+mid-range,astar,462,1388,true,4625.7,642,0.5
+reverse-cross-town,dijkstra,1850,0,true,3387.7,1493,0.9
+reverse-cross-town,astar,1850,0,true,3387.7,373,0.21
+same-node,dijkstra,100,100,true,0,1,0
+same-node,astar,100,100,true,0,1,0
