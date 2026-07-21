@@ -103,9 +103,9 @@ were added during the investigation, so none needed removing.
   [`484c478`](https://github.com/jordan-umpierre/delivery-routing-lab/commit/484c478):
   `parseScenarios` must accept CRLF input.
 - Root-cause fix at commit
-  [`3b496f4`](https://github.com/jordan-umpierre/delivery-routing-lab/commit/3b496f4):
+  [`3b496f47`](https://github.com/jordan-umpierre/delivery-routing-lab/commit/3b496f47c58c573dad84c61e134329ae9799307e):
   split on `/\r?\n/` inside `parseScenarios`. At `484c478` the suite fails
-  (1 failure); at `3b496f4` it passes (0 failures).
+  (1 failure); at `3b496f47` it passes (0 failures).
 - Multi-environment verification:
   [green matrix run](https://github.com/jordan-umpierre/delivery-routing-lab/actions/runs/29609982346)
   on `ubuntu-latest` and `windows-latest`, plus the local CRLF simulation

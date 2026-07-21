@@ -33,8 +33,8 @@ export interface Graph {
   out: GraphEdge[][];
 }
 
-export const MAX_NODES = 100_000;
-export const MAX_EDGES = 400_000;
+const MAX_NODES = 100_000;
+const MAX_EDGES = 400_000;
 
 /** Validate an untrusted fixture object and build the adjacency lists. */
 export function loadGraph(data: unknown): Graph {
